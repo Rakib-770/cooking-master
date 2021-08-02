@@ -10,6 +10,15 @@ recipeCloseBtn.addEventListener('click', () => {
     mealDetailsContent.parentElement.classList.remove('showIngredients');
 });
 
+// var searchButton = ;
+document.getElementById("search-input")
+.addEventListener("keypress", function(event){
+    //event.preventDefault();
+    if(event.key == 'Enter'){
+        document.getElementById("search-btn").click();
+    }
+    
+});
 
 // get meal list that matches with the ingredients
 function getMealList(){
@@ -43,6 +52,10 @@ function getMealList(){
         toggleSpinner();
     });
 }
+
+
+
+    
 
 
 // get recipe of the meal
