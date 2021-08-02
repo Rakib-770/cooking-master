@@ -10,7 +10,6 @@ recipeCloseBtn.addEventListener('click', () => {
     mealDetailsContent.parentElement.classList.remove('showIngredients');
 });
 
-// var searchButton = ;
 document.getElementById("search-input")
 .addEventListener("keypress", function(event){
     //event.preventDefault();
