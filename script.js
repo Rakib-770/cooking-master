@@ -1,19 +1,20 @@
 const searchBtn = document.getElementById('search-btn');
 const mealList = document.getElementById('meal');
 const mealDetailsContent = document.querySelector('.meal-details-content');
-const recipeCloseBtn = document.getElementById('recipe-close-btn');
+const recipeCloseBtn = document.getElementById('ingredients-close-btn');
 
 // event listeners
 searchBtn.addEventListener('click', getMealList);
 mealList.addEventListener('click', getMealRecipe);
 recipeCloseBtn.addEventListener('click', () => {
-    mealDetailsContent.parentElement.classList.remove('showRecipe');
+    mealDetailsContent.parentElement.classList.remove('showIngredients');
 });
 
 
 // get meal list that matches with the ingredients
 function getMealList(){
     let searchInputTxt = document.getElementById('search-input').value.trim();
+    toggleSpinner();
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInputTxt}`)
     .then(response => response.json())
     .then(data => {
@@ -27,7 +28,7 @@ function getMealList(){
                         </div>
                         <div class = "meal-name">
                             <h3>${meal.strMeal}</h3>
-                            <a href = "#" class = "recipe-btn">Show Ingredients</a>
+                            <a href = "#" class = "ingredients-btn">Show Ingredients</a>
                         </div>
                     </div>
                 `;
@@ -39,6 +40,7 @@ function getMealList(){
         }
 
         mealList.innerHTML = html;
+        toggleSpinner();
     });
 }
 
@@ -46,7 +48,7 @@ function getMealList(){
 // get recipe of the meal
 function getMealRecipe(e){
     e.preventDefault();
-    if(e.target.classList.contains('recipe-btn')){
+    if(e.target.classList.contains('ingredients-btn')){
         let mealItem = e.target.parentElement.parentElement;
         fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.dataset.id}`)
         .then(response => response.json())
@@ -84,5 +86,11 @@ function mealRecipeModal(meal){
         
     `;
     mealDetailsContent.innerHTML = html;
-    mealDetailsContent.parentElement.classList.add('showRecipe');
+    mealDetailsContent.parentElement.classList.add('showIngredients');
+    
+}
+
+const toggleSpinner = () => {
+    const spinner = document.getElementById('loading-spinner');
+    spinner.classList.toggle('d-none');  
 }
